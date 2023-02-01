@@ -26,5 +26,5 @@ class Test_Create_Post(TestCase):
         self.assertEqual(excerpt, 'Post excerpt')
         self.assertEqual(content, 'Post content')
         self.assertEqual(status, 'published')
-        self.assertEqual(str(post), "Post  title")
-        self.assertEqual(str(cat), "django")
+        self.assertEqual(str(post), 'Post  title')
+        self.assertEqual(str(cat), 'django')
