@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme, Input, Avatar } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Text from "antd/es/typography/Text";
+import Title from "antd/es/typography/Title";
 
 const { Search } = Input;
 const { Header, Sider, Content } = Layout;
 
 const MainLayout: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -24,7 +27,17 @@ const MainLayout: React.FC = () => {
   return (
     <Layout style={{ height: "100vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+        <Title
+          level={4}
+          style={{
+            color: "#fff",
+            margin: "10px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          DFG
+        </Title>
         <Menu
           theme="dark"
           mode="inline"
@@ -32,18 +45,21 @@ const MainLayout: React.FC = () => {
           items={[
             {
               key: "1",
-              icon: <UserOutlined />,
-              label: "",
+              onClick: () => navigate("/"),
+              icon: <AppstoreOutlined />,
+              label: "Dashboard",
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              onClick: () => navigate("/profile"),
+              icon: <UserOutlined />,
+              label: "Profile",
             },
             {
               key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
+              onClick: () => navigate("/settings"),
+              icon: <SettingOutlined />,
+              label: "Settings",
             },
           ]}
         />
