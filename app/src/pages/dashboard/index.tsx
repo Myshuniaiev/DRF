@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Result, Row } from "antd";
 import Title from "antd/es/typography/Title";
 import React, { useEffect, useState } from "react";
 import CustomizedCard from "../../components/Card";
@@ -53,12 +53,27 @@ export default function Dashboard() {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => setPosts({ ...posts, data, loading: false }))
-      .catch((error) => setPosts({ ...posts, error }));
+      .catch((error) => setPosts({ ...posts, error: error.message }));
   }, []);
+
+  if (posts.error)
+    return (
+      <Result
+        style={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+        status="error"
+        title={posts.error}
+      />
+    );
 
   return (
     <div>
       <Title>Dashboard page</Title>
+
       <Row gutter={16}>
         {posts.data.map((post) => (
           <Col span={8}>
