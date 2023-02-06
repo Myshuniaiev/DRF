@@ -5,6 +5,7 @@ import {
   UserOutlined,
   AppstoreOutlined,
   SettingOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import { Layout, Menu, theme, Input, Avatar } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -60,6 +61,12 @@ const MainLayout: React.FC = () => {
               onClick: () => navigate("/settings"),
               icon: <SettingOutlined />,
               label: "Settings",
+            },
+            {
+              key: "4",
+              onClick: () => navigate("/login"),
+              icon: <LogoutOutlined />,
+              label: "Logout",
             },
           ]}
         />
