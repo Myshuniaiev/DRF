@@ -1,7 +1,15 @@
-import { Col, Result, Row } from "antd";
+import { Col, Result, Row, Spin } from "antd";
 import Title from "antd/es/typography/Title";
 import React, { useEffect, useState } from "react";
 import CustomizedCard from "../../components/Card";
+import Loader from "../../components/Loader";
+
+const centerStyles: React.CSSProperties = {
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+};
 
 interface IState {
   loading: boolean;
@@ -17,7 +25,7 @@ interface IState {
 }
 export default function Dashboard() {
   const [posts, setPosts] = useState<IState>({
-    loading: false,
+    loading: true,
     error: undefined,
     data: [
       {
@@ -57,23 +65,11 @@ export default function Dashboard() {
   }, []);
 
   if (posts.error)
-    return (
-      <Result
-        style={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-        status="error"
-        title={posts.error}
-      />
-    );
+    return <Result style={centerStyles} status="error" title={posts.error} />;
+  else if (posts.loading) return <Loader />;
 
   return (
     <div>
-      <Title>Dashboard page</Title>
-
       <Row gutter={16}>
         {posts.data.map((post) => (
           <Col span={8}>
