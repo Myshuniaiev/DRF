@@ -1,14 +1,12 @@
 import React from "react";
-import { lazy } from "react";
 
 // project import
-import Loadable from "../components/Loadable";
 import MainLayout from "../layout/MainLayout";
 
 // render - dashboard
-const DashboardDefault = Loadable(lazy(() => import("../pages/dashboard")));
-const Profile = Loadable(lazy(() => import("../pages/profile")));
-const Settings = Loadable(lazy(() => import("../pages/settings")));
+import DashboardDefault from "../pages/dashboard";
+import Profile from "../pages/profile";
+import Settings from "../pages/settings";
 
 const MainRoutes = {
   path: "/",

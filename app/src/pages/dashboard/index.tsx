@@ -1,15 +1,7 @@
-import { Col, Result, Row, Spin } from "antd";
-import Title from "antd/es/typography/Title";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CustomizedCard from "../../components/Card";
 import Loader from "../../components/Loader";
-
-const centerStyles: React.CSSProperties = {
-  height: "100%",
-  display: "flex",
-  justifyContent: "center",
-  flexDirection: "column",
-};
 
 interface IState {
   loading: boolean;
@@ -64,24 +56,30 @@ export default function Dashboard() {
       .catch((error) => setPosts({ ...posts, error: error.message }));
   }, []);
 
-  if (posts.error)
-    return <Result style={centerStyles} status="error" title={posts.error} />;
+  if (posts.error) return <Box>Error: {posts.error}</Box>;
   else if (posts.loading) return <Loader />;
 
   return (
-    <div>
-      <Row gutter={16}>
+    <Container fixed>
+      <Typography variant="h2">Posts</Typography>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ p: "50px 0" }}
+      >
         {posts.data.map((post) => (
-          <Col span={8}>
+          <Grid item xs={2} sm={4} md={4} key={post.id}>
             <CustomizedCard
               key={post.title}
               loading={posts.loading}
               title={post.title}
-              description={post.content}
+              excerpt={post.excerpt}
+              content={post.content}
             />
-          </Col>
+          </Grid>
         ))}
-      </Row>
-    </div>
+      </Grid>
+    </Container>
   );
 }

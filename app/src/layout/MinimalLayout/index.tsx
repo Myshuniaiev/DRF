@@ -1,7 +1,6 @@
-import { Content } from "antd/es/layout/layout";
+import { Box } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
-
 
 const formStyles: React.CSSProperties = {
   height: "100vh",
@@ -12,9 +11,9 @@ const formStyles: React.CSSProperties = {
 };
 
 const MinimalLayout = () => (
-  <Content style={formStyles}>
+  <Box style={formStyles}>
     <Outlet />
-  </Content>
+  </Box>
 );
 
 export default MinimalLayout;

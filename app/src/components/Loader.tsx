@@ -1,5 +1,5 @@
 import React from "react";
-import { Spin } from "antd";
+import { CircularProgress } from "@mui/material";
 
 const Loader: React.FC = () => (
   <div
@@ -10,7 +10,7 @@ const Loader: React.FC = () => (
       flexDirection: "column",
     }}
   >
-    <Spin size="large" />
+    <CircularProgress />
   </div>
 );
 

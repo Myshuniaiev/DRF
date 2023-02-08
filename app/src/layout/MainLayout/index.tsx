@@ -1,126 +1,83 @@
-import React, { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-  LogoutOutlined
-} from "@ant-design/icons";
-import { Layout, Menu, theme, Input, Avatar } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
-import Text from "antd/es/typography/Text";
-import Title from "antd/es/typography/Title";
+import React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import { useAuth0 } from "@auth0/auth0-react";
+import Loader from "../../components/Loader";
+import { Outlet } from "react-router-dom";
+import Header from "../../components/Header";
 
-const { Search } = Input;
-const { Header, Sider, Content } = Layout;
+const drawerWidth = 240;
 
 const MainLayout: React.FC = () => {
-  const navigate = useNavigate();
+  const { user, loginWithRedirect, logout, isLoading } = useAuth0();
 
-  const [collapsed, setCollapsed] = useState(true);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
-  const onSearch = (value: string) => console.log(value);
+  if (isLoading)
+    return (
+      <Box style={{ height: "100vh" }}>
+        <Loader />
+      </Box>
+    );
+  else if (!user) loginWithRedirect();
 
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Title
-          level={4}
-          style={{
-            color: "#fff",
-            margin: "10px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          DFG
-        </Title>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              onClick: () => navigate("/"),
-              icon: <AppstoreOutlined />,
-              label: "Dashboard",
-            },
-            {
-              key: "2",
-              onClick: () => navigate("/profile"),
-              icon: <UserOutlined />,
-              label: "Profile",
-            },
-            {
-              key: "3",
-              onClick: () => navigate("/settings"),
-              icon: <SettingOutlined />,
-              label: "Settings",
-            },
-            {
-              key: "4",
-              onClick: () => navigate("/login"),
-              icon: <LogoutOutlined />,
-              label: "Logout",
-            },
-          ]}
-        />
-      </Sider>
-      <Layout className="site-layout">
-        <Header
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        >
-          {React.createElement(
-            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-            {
-              style: {
-                lineHeight: 0,
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-              },
-              className: "trigger",
-              onClick: () => setCollapsed(!collapsed),
-            }
-          )}
-          <Search
-            placeholder="input search text"
-            onSearch={onSearch}
-            style={{ width: 200, marginRight: "auto" }}
-          />
-          <Text>Oleksii Myshuniaiev</Text>
-          <Avatar
-            style={{
-              backgroundColor: "#87d068",
-              margin: "24px",
-            }}
-            icon={<UserOutlined />}
-          />
-        </Header>
-        <div style={{ overflow: "auto" }}>
-          <Content
-            style={{
-              margin: "24px 16px",
-              padding: 24,
-              minHeight: 280,
-              background: colorBgContainer,
-            }}
-          >
-            <Outlet />
-          </Content>
-        </div>
-      </Layout>
-    </Layout>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Header logout={logout} />
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ overflow: "auto" }}>
+          <List>
+            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {["All mail", "Trash", "Spam"].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Toolbar />
+        <Outlet />
+      </Box>
+    </Box>
   );
 };
 
