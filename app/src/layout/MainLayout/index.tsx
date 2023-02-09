@@ -27,7 +27,7 @@ const MainLayout: React.FC = () => {
         <Loader />
       </Box>
     );
-  else if (!user) loginWithRedirect();
+  if (!user) loginWithRedirect();
 
   return (
     <Box sx={{ display: "flex" }}>

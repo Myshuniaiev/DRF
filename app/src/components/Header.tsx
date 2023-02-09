@@ -14,6 +14,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { ConnectWithoutContact } from "@mui/icons-material";
 
 interface IProps {
   logout: Function;
@@ -173,13 +174,14 @@ export default function PrimarySearchAppBar(props: IProps) {
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
         <Toolbar>
+          <ConnectWithoutContact />
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" }, ml: 1 }}
           >
-            DRF
+            posteo
           </Typography>
           <Search>
             <SearchIconWrapper>

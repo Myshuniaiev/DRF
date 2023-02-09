@@ -3,6 +3,7 @@
         "corsheaders",
         "detailcreate",
         "listcreate",
+        "posteo",
         "postobjects"
     ]
 }
