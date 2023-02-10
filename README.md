@@ -37,7 +37,3 @@ A social network application built with React on the frontend and Django on the 
 ## Contributing
 
 If you are interested in contributing to the project, feel free to open an issue or make a pull request on the repository at https://github.com/Myshuniaiev/posteo.
-
-## License
-
-This project is licensed under the MIT License.
