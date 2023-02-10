@@ -1,16 +1,9 @@
+import React from "react";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import React, { ComponentType } from "react";
-import { Route, RouteProps } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { PageLoader } from "./page-loader";
 
-interface ProtectedRouteProps extends RouteProps {
-  component: ComponentType;
-}
-
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  component,
-  ...args
-}) => (
+export const ProtectedRoute = ({ component, ...args }: any) => (
   <Route
     component={withAuthenticationRequired(component, {
       onRedirecting: () => (
